@@ -1,6 +1,6 @@
 name: serial_queue
 description: Convert concurrent business processes into serial sequential execution of each business process.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/wilson23yang/serial_queue.git
 
 environment:

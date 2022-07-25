@@ -5,4 +5,7 @@
 * Add example serial_queue_test.dart
 * Add example serial_queue_test2.dart
 
+## 1.0.1
+* format code
+
 
