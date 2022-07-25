@@ -30,7 +30,7 @@ class SerialQueue<T extends _Task> {
 
   bool get isRunning => _isRunning;
 
-  ///
+  /// 启动队列
   void startQueue() async {
     if (_isRunning) {
       return;
@@ -83,7 +83,7 @@ class SerialQueue<T extends _Task> {
     }
   }
 
-  ///
+  /// 添加任务到队列
   void addTask(T task) {
     try {
       _task.add(task);
@@ -93,7 +93,7 @@ class SerialQueue<T extends _Task> {
     } catch (_) {}
   }
 
-  ///
+  /// 添加任务到队列最前面
   void addTaskToFirst(T task) {
     try {
       _task.insert(0, task);
@@ -103,7 +103,8 @@ class SerialQueue<T extends _Task> {
     } catch (_) {}
   }
 
-  ///
+  /// 退出队列
+  /// @disposeTask 退出时其他需要处理的内容
   Future<void> dispose([FutureOr<void> Function()? disposeTask]) async {
     _isDisposed = true;
     sleepCompleter?.complete();

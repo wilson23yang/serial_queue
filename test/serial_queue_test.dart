@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:serial_queue/serial_queue.dart';
 import 'package:serial_queue/sleep.dart';
 
-
 /// 100个人在5台atm机上存钱
 void main() async {
   bool useQueue = false;
@@ -61,6 +60,7 @@ class Person {
 
   double money = 0;
 
+  /// print
   void look() {
     //print('accountNo:$accountNo   money=$money');
   }
@@ -82,6 +82,7 @@ class ATM {
     return await bank.atmDeposit(id, accountNo, money);
   }
 
+  /// print
   void look() {
     print('ATM id:$id   money=$money');
   }
@@ -122,36 +123,45 @@ class Bank {
       params: '-----------> ATM故障!!!',
     );
     queue.addTask(task);
-    return task.future.onError((error, stackTrace){
+    return task.future.onError((error, stackTrace) {
       print('$error');
       return false;
     });
   }
 
   ///
-  Future<bool> atmDeposit(String fromAtmId, String accountNo, double money) async {
+  Future<bool> atmDeposit(
+      String fromAtmId, String accountNo, double money) async {
     if (useQueue) {
-      var task = Task<bool, DepositInfo>.create(taskHandler: _atmDeposit, params: DepositInfo(fromAtmId: fromAtmId, accountNo: accountNo, money: money));
+      var task = Task<bool, DepositInfo>.create(
+          taskHandler: _atmDeposit,
+          params: DepositInfo(
+              fromAtmId: fromAtmId, accountNo: accountNo, money: money));
       queue.addTask(task);
-      var r = await task.future.onError((error, stackTrace){
+      var r = await task.future.onError((error, stackTrace) {
         print('$error');
         return false;
       });
       return r;
     } else {
-      return _atmDeposit(params: DepositInfo(fromAtmId: fromAtmId, accountNo: accountNo, money: money));
+      return _atmDeposit(
+          params: DepositInfo(
+              fromAtmId: fromAtmId, accountNo: accountNo, money: money));
     }
   }
 
   ///
   Future<bool> _atmDeposit({DepositInfo? params}) async {
-    print('orderId:${orderId++}     fromAtmId:${params!.fromAtmId}  ${params.accountNo}  ${params.money}');
+    print(
+        'orderId:${orderId++}     fromAtmId:${params!.fromAtmId}  ${params.accountNo}  ${params.money}');
     await sleep(2);
-    var atm = atms.firstWhere((atm) => atm?.id == params.fromAtmId, orElse: () => null);
+    var atm = atms.firstWhere((atm) => atm?.id == params.fromAtmId,
+        orElse: () => null);
     if (atm == null) {
       return false;
     }
-    var person = persons.firstWhere((p) => p?.accountNo == params.accountNo, orElse: () => null);
+    var person = persons.firstWhere((p) => p?.accountNo == params.accountNo,
+        orElse: () => null);
     if (person == null) {
       return false;
     }
@@ -167,7 +177,7 @@ class Bank {
     return true;
   }
 
-  ///
+  /// print
   void look() {
     print('Bank name:$name   total=$total');
 
@@ -193,5 +203,6 @@ class DepositInfo {
   String accountNo;
   double money;
 
-  DepositInfo({required this.fromAtmId, required this.accountNo, required this.money});
+  DepositInfo(
+      {required this.fromAtmId, required this.accountNo, required this.money});
 }
