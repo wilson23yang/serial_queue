@@ -1,5 +1,5 @@
 name: serial_queue
-description: A new Flutter project.
+description: Convert concurrent business processes into serial sequential execution of each business process.
 version: 1.0.0
 repository: https://github.com/wilson23yang/serial_queue.git
 
