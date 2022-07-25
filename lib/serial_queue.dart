@@ -64,7 +64,7 @@ class SerialQueue<T extends _Task> {
         }
         await _sleepCompleter?.future;
         _sleepCompleter = null;
-        if(log){
+        if (log) {
           if (kDebugMode) {
             print('The queue is woken up and starts working');
           }
@@ -76,7 +76,7 @@ class SerialQueue<T extends _Task> {
       }
     }
     _disposeCompleter.complete();
-    if(log){
+    if (log) {
       if (kDebugMode) {
         print('queue is closed');
       }
@@ -166,4 +166,3 @@ class Task<R, P> extends _Task<R, P> {
     P? params,
   }) : super(taskHandler: taskHandler, params: params);
 }
-
